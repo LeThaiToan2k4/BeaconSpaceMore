@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "beaconmorespace",
+  "version": "${version}",
+  "name": "Beacon More Space",
+  "description": "Beacon effect range now depends on the payment item used to confirm effects: Iron +0, Gold +10, Emerald +20, Diamond +30, Netherite +50 blocks. Each Beacon keeps its own range, and the Beacon GUI shows the active tier, current range and a live preview.",
+  "authors": [
+    "thaistoanf"
+  ],
+  "contact": {
+    "homepage": "https://github.com/LeThaiToan2k4",
+    "sources": "https://github.com/LeThaiToan2k4"
+  },
+  "license": "MIT",
+  "icon": "assets/beaconmorespace/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.thaistoanf.beaconmorespace.BeaconMoreSpace"
+    ],
+    "client": [
+      "com.thaistoanf.beaconmorespace.client.BeaconMoreSpaceClient"
+    ]
+  },
+  "mixins": [
+    "beaconmorespace.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "fabric-api": "*",
+    "minecraft": "~1.21.11",
+    "java": ">=21"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.kofi": "https://ko-fi.com/thaistoanf"
+      }
+    }
+  }
+}

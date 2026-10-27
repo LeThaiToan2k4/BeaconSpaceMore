@@ -1,0 +1,17 @@
+{
+  "beaconmorespace.gui.title": "Beacon More Space",
+  "beaconmorespace.gui.tier": "Tier: %s",
+  "beaconmorespace.gui.level": "Pyramid Level: %s",
+  "beaconmorespace.gui.range": "Range: %s blocks (+%s)",
+  "beaconmorespace.gui.range_inactive": "Range: inactive (no pyramid)",
+  "beaconmorespace.gui.preview": "Preview Range: %s blocks (+%s)",
+  "beaconmorespace.gui.preview_inactive": "Preview Bonus: +%s blocks",
+  "beaconmorespace.gui.table_header": "Range by payment (Level %s):",
+  "beaconmorespace.gui.table_entry": "%s: %s blocks (+%s)",
+  "beaconmorespace.tier.iron": "Iron",
+  "beaconmorespace.tier.gold": "Gold",
+  "beaconmorespace.tier.emerald": "Emerald",
+  "beaconmorespace.tier.diamond": "Diamond",
+  "beaconmorespace.tier.netherite": "Netherite",
+  "modmenu.kofi": "Support on Ko-fi"
+}

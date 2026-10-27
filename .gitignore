@@ -1,0 +1,38 @@
+# Gradle cache & daemon
+.gradle/
+.gradle-test/
+.gradle-user/
+
+# Build outputs & compiled bytecode
+build/
+bin/
+out/
+classes/
+*.class
+
+# Minecraft runtime, test runs & crash logs
+run/
+runs/
+crash-reports/
+
+# Logs & temporary files
+logs/
+*.log
+*.tmp
+*.bak
+*.swp
+
+# IDEs & Editor configurations
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+
+# Operating System specific files
+.DS_Store
+Thumbs.db
+desktop.ini

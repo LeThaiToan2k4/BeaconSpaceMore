@@ -1,0 +1,17 @@
+{
+  "beaconmorespace.gui.title": "Beacon More Space",
+  "beaconmorespace.gui.tier": "Bậc: %s",
+  "beaconmorespace.gui.level": "Cấp kim tự tháp: %s",
+  "beaconmorespace.gui.range": "Phạm vi: %s khối (+%s)",
+  "beaconmorespace.gui.range_inactive": "Phạm vi: chưa kích hoạt (thiếu kim tự tháp)",
+  "beaconmorespace.gui.preview": "Xem trước: %s khối (+%s)",
+  "beaconmorespace.gui.preview_inactive": "Thưởng xem trước: +%s khối",
+  "beaconmorespace.gui.table_header": "Phạm vi theo vật phẩm (Cấp %s):",
+  "beaconmorespace.gui.table_entry": "%s: %s khối (+%s)",
+  "beaconmorespace.tier.iron": "Sắt",
+  "beaconmorespace.tier.gold": "Vàng",
+  "beaconmorespace.tier.emerald": "Ngọc lục bảo",
+  "beaconmorespace.tier.diamond": "Kim cương",
+  "beaconmorespace.tier.netherite": "Netherite",
+  "modmenu.kofi": "Ủng hộ trên Ko-fi"
+}
