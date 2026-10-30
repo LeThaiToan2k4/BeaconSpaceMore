@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.20.1 Backport
+## [1.0.0] - Fabric 1.20.2
 
 ### Overview
-- Backported **Beacon More Space** to **Minecraft 1.20.1 (Fabric)**.
+- Ported **Beacon More Space** to **Minecraft 1.20.2 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,22 +25,19 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `Identifier` channel handshake.
 
-### Technical Backport Changes (1.20.1)
+### Technical Changes (1.20.2)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.20.1**, **Yarn `1.20.1+build.10`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.92.12+1.20.1`**.
+  - Aligned target to **Minecraft 1.20.2**, **Yarn `1.20.2+build.4`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.91.6+1.20.2`**.
   - Configured build toolchain for **Java 17**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
 - **BlockEntity Persistence:**
-  - Migrated `BeaconBlockEntityMixin` data serialization from `ReadView` / `WriteView` (`readData` / `writeData`) to 1.20.1 `NbtCompound` (`readNbt` / `writeNbt`).
+  - Uses 1.20.2 `NbtCompound` serialization (`readNbt` / `writeNbt`) in `BeaconBlockEntityMixin`.
 - **Screen Handler & Effects:**
-  - Adapted `BeaconScreenHandlerMixin` injection on `setEffects` to match 1.20.1 `Optional<StatusEffect>` parameters.
-- **Networking:**
-  - Migrated `HandshakePayload` and client receiver registration to 1.20.1 `Identifier`-based channel networking (`ClientPlayNetworking.registerGlobalReceiver` and `ServerPlayNetworking.canSend`).
+  - Captures payment items in `BeaconScreenHandlerMixin` on `setEffects(Optional<StatusEffect>, Optional<StatusEffect>)`.
 - **GUI Rendering:**
-  - Adapted `BeaconRangeHud` rendering to 1.20.1 `MatrixStack` transformations, `DrawContext#drawBorder`, and `Style#withColor`.
+  - Renders HUD text and slot outlines in `BeaconRangeHud` using `MatrixStack`, `DrawContext#drawBorder`, and `Style#withColor`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.20.1`
+- **Minecraft Java Edition:** `1.20.2`
 - **Java:** `17` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.92.12+1.20.1` or newer
-
+- **Fabric API:** `0.91.6+1.20.2` or newer
