@@ -10,10 +10,9 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -59,14 +58,14 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 	// Persistence
 	// ---------------------------------------------------------------------------------------------
 
-	@Inject(method = "readData", at = @At("TAIL"))
-	private void beaconmorespace$readPaymentTier(ReadView view, CallbackInfo ci) {
-		this.beaconmorespace$paymentTier = PaymentTier.byIndex(view.getInt(PAYMENT_TIER_KEY, PaymentTier.IRON.index())).index();
+	@Inject(method = "readNbt", at = @At("TAIL"))
+	private void beaconmorespace$readPaymentTier(NbtCompound nbt, CallbackInfo ci) {
+		this.beaconmorespace$paymentTier = PaymentTier.byIndex(nbt.getInt(PAYMENT_TIER_KEY)).index();
 	}
 
-	@Inject(method = "writeData", at = @At("TAIL"))
-	private void beaconmorespace$writePaymentTier(WriteView view, CallbackInfo ci) {
-		view.putInt(PAYMENT_TIER_KEY, this.beaconmorespace$paymentTier);
+	@Inject(method = "writeNbt", at = @At("TAIL"))
+	private void beaconmorespace$writePaymentTier(NbtCompound nbt, CallbackInfo ci) {
+		nbt.putInt(PAYMENT_TIER_KEY, this.beaconmorespace$paymentTier);
 	}
 
 	// ---------------------------------------------------------------------------------------------

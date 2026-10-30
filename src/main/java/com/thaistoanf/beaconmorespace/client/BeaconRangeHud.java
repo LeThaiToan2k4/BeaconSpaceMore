@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.BeaconScreenHandler;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import org.joml.Matrix3x2fStack;
 
 /**
  * Renders the Beacon More Space indicator inside the vanilla Beacon GUI.
@@ -124,7 +124,7 @@ public final class BeaconRangeHud {
 			for (PaymentTier entry : PaymentTier.values()) {
 				MutableText line = Text.translatable(
 						"beaconmorespace.gui.table_entry",
-						Text.translatable(entry.translationKey()).withColor(entry.color()),
+						Text.translatable(entry.translationKey()).styled(style -> style.withColor(entry.color())),
 						BeaconRange.totalRange(level, entry),
 						entry.bonusRange()
 				);
@@ -141,7 +141,10 @@ public final class BeaconRangeHud {
 	}
 
 	private static MutableText tierLine(PaymentTier tier) {
-		return Text.translatable("beaconmorespace.gui.tier", Text.translatable(tier.translationKey()).withColor(tier.color()));
+		return Text.translatable(
+				"beaconmorespace.gui.tier",
+				Text.translatable(tier.translationKey()).styled(style -> style.withColor(tier.color()))
+		);
 	}
 
 	private static MutableText rangeLine(int level, PaymentTier tier) {
@@ -162,12 +165,12 @@ public final class BeaconRangeHud {
 		}
 		float scale = Math.min(MAX_SCALE, MAX_LINE_WIDTH / (float) width);
 
-		Matrix3x2fStack matrices = context.getMatrices();
-		matrices.pushMatrix();
-		matrices.translate(AREA_CENTER_X, y);
-		matrices.scale(scale, scale);
+		MatrixStack matrices = context.getMatrices();
+		matrices.push();
+		matrices.translate(AREA_CENTER_X, y, 0.0F);
+		matrices.scale(scale, scale, 1.0F);
 		context.drawTextWithShadow(textRenderer, text, -width / 2, 0, color);
-		matrices.popMatrix();
+		matrices.pop();
 	}
 
 	private static void drawIconOutline(DrawContext context, PaymentTier tier, int color) {
@@ -178,6 +181,6 @@ public final class BeaconRangeHud {
 			case DIAMOND -> ICON_X_DIAMOND;
 			case NETHERITE -> ICON_X_NETHERITE;
 		};
-		context.drawStrokedRectangle(x - 1, ICON_Y - 1, 18, 18, color);
+		context.drawBorder(x - 1, ICON_Y - 1, 18, 18, color);
 	}
 }

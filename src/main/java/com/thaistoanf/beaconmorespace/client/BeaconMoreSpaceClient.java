@@ -9,8 +9,8 @@ public final class BeaconMoreSpaceClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// Registering a receiver advertises the channel to the server, which then knows this client
-		// understands the extra Beacon screen property. The payload itself carries no data.
-		ClientPlayNetworking.registerGlobalReceiver(HandshakePayload.ID, (payload, context) -> {
+		// understands the extra Beacon screen property. The channel itself carries no data.
+		ClientPlayNetworking.registerGlobalReceiver(HandshakePayload.ID, (client, handler, buf, responseSender) -> {
 		});
 	}
 }

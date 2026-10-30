@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <img alt="Minecraft 1.21.11" src="https://img.shields.io/badge/Minecraft-1.21.11-62B47A?style=for-the-badge">
-  <img alt="Fabric Loader 0.18.4+" src="https://img.shields.io/badge/Fabric_Loader-0.18.4%2B-DBD0B4?style=for-the-badge">
-  <img alt="Java 21" src="https://img.shields.io/badge/Java-21-E76F00?style=for-the-badge">
+  <img alt="Minecraft 1.20.1" src="https://img.shields.io/badge/Minecraft-1.20.1-62B47A?style=for-the-badge">
+  <img alt="Fabric Loader 0.20.1+" src="https://img.shields.io/badge/Fabric_Loader-0.20.1%2B-DBD0B4?style=for-the-badge">
+  <img alt="Java 17" src="https://img.shields.io/badge/Java-17-E76F00?style=for-the-badge">
   <a href="https://github.com/LeThaiToan2k4"><img alt="Author: thaistoanf" src="https://img.shields.io/badge/Author-thaistoanf-24292F?style=for-the-badge"></a>
   <a href="https://ko-fi.com/thaistoanf"><img alt="Donate on Ko-fi" src="https://img.shields.io/badge/Donate-Ko--fi-FF5E5B?style=for-the-badge"></a>
 </p>
@@ -103,19 +103,19 @@ tier data to send.
 
 ### Requirements
 
-| Component              | Version                |
-| ---------------------- | ---------------------- |
-| Minecraft Java Edition | 1.21.11                |
-| Java                   | 21 or newer            |
-| Fabric Loader          | 0.18.4 or newer        |
-| Fabric API             | Matching 1.21.11 build |
+| Component              | Version               |
+| ---------------------- | --------------------- |
+| Minecraft Java Edition | 1.20.1                |
+| Java                   | 17 or newer           |
+| Fabric Loader          | 0.20.1 or newer       |
+| Fabric API             | Matching 1.20.1 build |
 
 ### Installation
 
-1. Install **Java 21**.
-2. Install **Fabric Loader** for Minecraft 1.21.11 from the official Fabric website.
-3. Download **Fabric API** for 1.21.11.
-4. Copy `beaconmorespace-1.0.0.jar` and the Fabric API jar into your `.minecraft/mods` folder.
+1. Install **Java 17**.
+2. Install **Fabric Loader** for Minecraft 1.20.1 from the official Fabric website.
+3. Download **Fabric API** for 1.20.1.
+4. Copy `beaconmorespace-fabric-1.20.1-1.0.0.jar` and the Fabric API jar into your `.minecraft/mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
    - macOS: `~/Library/Application Support/minecraft/mods`
    - Linux: `~/.minecraft/mods`
@@ -230,19 +230,19 @@ Nếu bạn vào máy chủ không cài mod, chỉ báo sẽ không hiển thị
 
 ### Yêu cầu
 
-| Thành phần             | Phiên bản                 |
-| ---------------------- | ------------------------- |
-| Minecraft Java Edition | 1.21.11                   |
-| Java                   | 21 trở lên                |
-| Fabric Loader          | 0.18.4 trở lên            |
-| Fabric API             | Bản tương ứng với 1.21.11 |
+| Thành phần             | Phiên bản                |
+| ---------------------- | ------------------------ |
+| Minecraft Java Edition | 1.20.1                   |
+| Java                   | 17 trở lên               |
+| Fabric Loader          | 0.20.1 trở lên           |
+| Fabric API             | Bản tương ứng với 1.20.1 |
 
 ### Cài đặt
 
-1. Cài đặt **Java 21**.
-2. Cài đặt **Fabric Loader** cho Minecraft 1.21.11 từ trang chủ Fabric.
-3. Tải **Fabric API** cho 1.21.11.
-4. Chép `beaconmorespace-1.0.0.jar` và file jar Fabric API vào thư mục `.minecraft/mods`.
+1. Cài đặt **Java 17**.
+2. Cài đặt **Fabric Loader** cho Minecraft 1.20.1 từ trang chủ Fabric.
+3. Tải **Fabric API** cho 1.20.1.
+4. Chép `beaconmorespace-fabric-1.20.1-1.0.0.jar` và file jar Fabric API vào thư mục `.minecraft/mods`.
    - Windows: `%appdata%\.minecraft\mods`
    - macOS: `~/Library/Application Support/minecraft/mods`
    - Linux: `~/.minecraft/mods`

@@ -8,7 +8,6 @@ import java.util.Optional;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.BeaconScreenHandler;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -54,8 +53,8 @@ public abstract class BeaconScreenHandlerMixin implements BeaconScreenHandlerAcc
 	 */
 	@Inject(method = "setEffects", at = @At("HEAD"))
 	private void beaconmorespace$capturePaymentTier(
-			Optional<RegistryEntry<StatusEffect>> primary,
-			Optional<RegistryEntry<StatusEffect>> secondary,
+			Optional<StatusEffect> primary,
+			Optional<StatusEffect> secondary,
 			CallbackInfo ci
 	) {
 		ItemStack stack = this.payment.getStack(0);
