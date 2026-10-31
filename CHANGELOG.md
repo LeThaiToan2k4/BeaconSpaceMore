@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.20.2
+## [1.0.0] - Fabric 1.20.3
 
 ### Overview
-- Ported **Beacon More Space** to **Minecraft 1.20.2 (Fabric)**.
+- Ported **Beacon More Space** to **Minecraft 1.20.3 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,19 +25,19 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `Identifier` channel handshake.
 
-### Technical Changes (1.20.2)
+### Technical Changes (1.20.3)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.20.2**, **Yarn `1.20.2+build.4`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.91.6+1.20.2`**.
+  - Aligned target to **Minecraft 1.20.3**, **Yarn `1.20.3+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.91.1+1.20.3`**.
   - Configured build toolchain for **Java 17**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
 - **BlockEntity Persistence:**
-  - Uses 1.20.2 `NbtCompound` serialization (`readNbt` / `writeNbt`) in `BeaconBlockEntityMixin`.
+  - Uses 1.20.3 `NbtCompound` serialization (`readNbt` / `writeNbt`) in `BeaconBlockEntityMixin`.
 - **Screen Handler & Effects:**
   - Captures payment items in `BeaconScreenHandlerMixin` on `setEffects(Optional<StatusEffect>, Optional<StatusEffect>)`.
 - **GUI Rendering:**
   - Renders HUD text and slot outlines in `BeaconRangeHud` using `MatrixStack`, `DrawContext#drawBorder`, and `Style#withColor`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.20.2`
+- **Minecraft Java Edition:** `1.20.3`
 - **Java:** `17` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.91.6+1.20.2` or newer
+- **Fabric API:** `0.91.1+1.20.3` or newer
