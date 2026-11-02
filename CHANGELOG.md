@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.20.5
+## [1.0.0] - Fabric 1.20.6
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 1.20.5 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 1.20.6 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,19 +25,19 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
 
-### Technical Changes (1.20.5)
+### Technical Changes (1.20.6)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.20.5**, **Yarn `1.20.5+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.97.8+1.20.5`**.
-  - Upgraded build toolchain to **Java 21**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
+  - Aligned target to **Minecraft 1.20.6**, **Yarn `1.20.6+build.3`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.100.8+1.20.6`**.
+  - Configured build toolchain for **Java 21**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
 - **BlockEntity Persistence:**
-  - Migrated `BeaconBlockEntityMixin` NBT serialization to 1.20.5 `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)`.
+  - Uses `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)` in `BeaconBlockEntityMixin`.
 - **Networking:**
-  - Migrated `HandshakePayload` to 1.20.5 `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()`.
+  - Uses `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()` in `HandshakePayload`.
 - **Screen Handler & Effects:**
-  - Updated `BeaconScreenHandlerMixin` `setEffects` injection to use `Optional<RegistryEntry<StatusEffect>>`.
+  - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.20.5`
+- **Minecraft Java Edition:** `1.20.6`
 - **Java:** `21` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.97.8+1.20.5` or newer
+- **Fabric API:** `0.100.8+1.20.6` or newer
