@@ -11,6 +11,7 @@ import net.minecraft.block.entity.BeaconBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -59,12 +60,12 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 	// ---------------------------------------------------------------------------------------------
 
 	@Inject(method = "readNbt", at = @At("TAIL"))
-	private void beaconmorespace$readPaymentTier(NbtCompound nbt, CallbackInfo ci) {
+	private void beaconmorespace$readPaymentTier(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
 		this.beaconmorespace$paymentTier = PaymentTier.byIndex(nbt.getInt(PAYMENT_TIER_KEY)).index();
 	}
 
 	@Inject(method = "writeNbt", at = @At("TAIL"))
-	private void beaconmorespace$writePaymentTier(NbtCompound nbt, CallbackInfo ci) {
+	private void beaconmorespace$writePaymentTier(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
 		nbt.putInt(PAYMENT_TIER_KEY, this.beaconmorespace$paymentTier);
 	}
 
