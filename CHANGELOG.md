@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.21
+## [1.0.0] - Fabric 1.21.2
 
 ### Overview
-- Ported **Beacon More Space** to **Minecraft 1.21 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 1.21.2 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,9 +25,9 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
 
-### Technical Changes (1.21)
+### Technical Changes (1.21.2)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.21**, **Yarn `1.21+build.9`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.102.0+1.21`**.
+  - Aligned target to **Minecraft 1.21.2**, **Yarn `1.21.2+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.106.1+1.21.2`**.
   - Configured build toolchain for **Java 21**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
 - **BlockEntity Persistence:**
   - Uses `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)` in `BeaconBlockEntityMixin`.
@@ -37,7 +37,7 @@
   - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.21`
+- **Minecraft Java Edition:** `1.21.2`
 - **Java:** `21` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.102.0+1.21` or newer
+- **Fabric API:** `0.106.1+1.21.2` or newer
