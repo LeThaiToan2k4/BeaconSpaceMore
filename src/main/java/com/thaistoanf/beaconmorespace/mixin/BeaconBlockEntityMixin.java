@@ -61,7 +61,7 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 
 	@Inject(method = "readNbt", at = @At("TAIL"))
 	private void beaconmorespace$readPaymentTier(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
-		this.beaconmorespace$paymentTier = PaymentTier.byIndex(nbt.getInt(PAYMENT_TIER_KEY)).index();
+		this.beaconmorespace$paymentTier = PaymentTier.byIndex(nbt.getInt(PAYMENT_TIER_KEY, PaymentTier.IRON.index())).index();
 	}
 
 	@Inject(method = "writeNbt", at = @At("TAIL"))

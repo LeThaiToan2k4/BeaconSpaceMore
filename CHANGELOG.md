@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.21.4
+## [1.0.0] - Fabric 1.21.5
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 1.21.4 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 1.21.5 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,19 +25,19 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
 
-### Technical Changes (1.21.4)
+### Technical Changes (1.21.5)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.21.4**, **Yarn `1.21.4+build.8`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.119.4+1.21.4`**.
-  - Configured build toolchain for **Java 21**, **Gradle `8.10.2`**, and **Fabric Loom `1.7.4`**.
+  - Aligned target to **Minecraft 1.21.5**, **Yarn `1.21.5+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.128.2+1.21.5`**.
+  - Configured build toolchain for **Java 21**, **Gradle `8.12`**, and **Fabric Loom `1.10-SNAPSHOT`**.
 - **BlockEntity Persistence:**
-  - Uses `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)` in `BeaconBlockEntityMixin`.
+  - Uses `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` with `nbt.getInt(key, defaultValue)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)` in `BeaconBlockEntityMixin`.
 - **Networking:**
   - Uses `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()` in `HandshakePayload`.
 - **Screen Handler & Effects:**
   - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.21.4`
+- **Minecraft Java Edition:** `1.21.5`
 - **Java:** `21` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.119.4+1.21.4` or newer
+- **Fabric API:** `0.128.2+1.21.5` or newer
