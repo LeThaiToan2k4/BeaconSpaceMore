@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.BeaconScreenHandler;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.joml.Matrix3x2fStack;
 
 /**
  * Renders the Beacon More Space indicator inside the vanilla Beacon GUI.
@@ -165,12 +165,12 @@ public final class BeaconRangeHud {
 		}
 		float scale = Math.min(MAX_SCALE, MAX_LINE_WIDTH / (float) width);
 
-		MatrixStack matrices = context.getMatrices();
-		matrices.push();
-		matrices.translate(AREA_CENTER_X, y, 0.0F);
-		matrices.scale(scale, scale, 1.0F);
+		Matrix3x2fStack matrices = context.getMatrices();
+		matrices.pushMatrix();
+		matrices.translate(AREA_CENTER_X, y);
+		matrices.scale(scale, scale);
 		context.drawTextWithShadow(textRenderer, text, -width / 2, 0, color);
-		matrices.pop();
+		matrices.popMatrix();
 	}
 
 	private static void drawIconOutline(DrawContext context, PaymentTier tier, int color) {

@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.21.5
+## [1.0.0] - Fabric 1.21.6
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 1.21.5 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 1.21.6 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -14,7 +14,7 @@
   - **Diamond:** `+30` blocks (`50` / `60` / `70` / `80` blocks at Pyramid Levels 1-4)
   - **Netherite Ingot:** `+50` blocks (`70` / `80` / `90` / `100` blocks at Pyramid Levels 1-4)
 - **Independent Multi-Beacon Persistence:**
-  - Each Beacon independently stores and persists its own payment tier in block entity NBT (`PaymentTier`).
+  - Each Beacon independently stores and persists its own payment tier in block entity data (`PaymentTier`).
   - Multiple Beacons sharing the same pyramid operate with their own individual effect radius.
 - **Beacon GUI Indicator & Live Preview:**
   - Displays the active material tier and current effect radius inside the Secondary Power panel of the Beacon screen.
@@ -25,19 +25,21 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
 
-### Technical Changes (1.21.5)
+### Technical Changes (1.21.6)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.21.5**, **Yarn `1.21.5+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.128.2+1.21.5`**.
+  - Aligned target to **Minecraft 1.21.6**, **Yarn `1.21.6+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.128.2+1.21.6`**.
   - Configured build toolchain for **Java 21**, **Gradle `8.12`**, and **Fabric Loom `1.10-SNAPSHOT`**.
 - **BlockEntity Persistence:**
-  - Uses `readNbt(NbtCompound, RegistryWrapper.WrapperLookup)` with `nbt.getInt(key, defaultValue)` and `writeNbt(NbtCompound, RegistryWrapper.WrapperLookup)` in `BeaconBlockEntityMixin`.
+  - Migrated from `readNbt` / `writeNbt` to `readData(ReadView)` and `writeData(WriteView)` in `BeaconBlockEntityMixin`.
+- **GUI & 2D Matrix Rendering:**
+  - Migrated `DrawContext#getMatrices()` usage in `BeaconRangeHud` from 3D `MatrixStack` to JOML 2D `Matrix3x2fStack` (`pushMatrix`, `translate`, `scale`, `popMatrix`).
 - **Networking:**
   - Uses `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()` in `HandshakePayload`.
 - **Screen Handler & Effects:**
   - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.21.5`
+- **Minecraft Java Edition:** `1.21.6`
 - **Java:** `21` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.128.2+1.21.5` or newer
+- **Fabric API:** `0.128.2+1.21.6` or newer
