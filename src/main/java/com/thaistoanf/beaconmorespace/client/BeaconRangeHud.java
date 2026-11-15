@@ -181,6 +181,6 @@ public final class BeaconRangeHud {
 			case DIAMOND -> ICON_X_DIAMOND;
 			case NETHERITE -> ICON_X_NETHERITE;
 		};
-		context.drawBorder(x - 1, ICON_Y - 1, 18, 18, color);
+		context.drawStrokedRectangle(x - 1, ICON_Y - 1, 18, 18, color);
 	}
 }
