@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.21.6
+## [1.0.0] - Fabric 1.21.7
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 1.21.6 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 1.21.7 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,21 +25,21 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
 
-### Technical Changes (1.21.6)
+### Technical Changes (1.21.7)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.21.6**, **Yarn `1.21.6+build.1`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.128.2+1.21.6`**.
+  - Aligned target to **Minecraft 1.21.7**, **Yarn `1.21.7+build.8`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.129.0+1.21.7`**.
   - Configured build toolchain for **Java 21**, **Gradle `8.12`**, and **Fabric Loom `1.10-SNAPSHOT`**.
 - **BlockEntity Persistence:**
-  - Migrated from `readNbt` / `writeNbt` to `readData(ReadView)` and `writeData(WriteView)` in `BeaconBlockEntityMixin`.
+  - Uses `readData(ReadView)` and `writeData(WriteView)` in `BeaconBlockEntityMixin`.
 - **GUI & 2D Matrix Rendering:**
-  - Migrated `DrawContext#getMatrices()` usage in `BeaconRangeHud` from 3D `MatrixStack` to JOML 2D `Matrix3x2fStack` (`pushMatrix`, `translate`, `scale`, `popMatrix`).
+  - Uses JOML 2D `Matrix3x2fStack` (`pushMatrix`, `translate`, `scale`, `popMatrix`) via `DrawContext#getMatrices()` in `BeaconRangeHud`.
 - **Networking:**
   - Uses `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()` in `HandshakePayload`.
 - **Screen Handler & Effects:**
   - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.21.6`
+- **Minecraft Java Edition:** `1.21.7`
 - **Java:** `21` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.128.2+1.21.6` or newer
+- **Fabric API:** `0.129.0+1.21.7` or newer
