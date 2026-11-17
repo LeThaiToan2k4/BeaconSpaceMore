@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.BeaconMenu;
+import org.jspecify.annotations.NonNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,12 +21,12 @@ public abstract class BeaconScreenMixin extends AbstractContainerScreen<BeaconMe
 	}
 
 	@Inject(method = "extractLabels", at = @At("TAIL"))
-	private void beaconmorespace$drawRangeIndicator(GuiGraphicsExtractor context, int mouseX, int mouseY, CallbackInfo ci) {
+	private void beaconmorespace$drawRangeIndicator(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY, CallbackInfo ci) {
 		BeaconRangeHud.drawForeground(context, this.font, this.menu);
 	}
 
 	@Override
-	public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
+	public void extractRenderState(@NonNull GuiGraphicsExtractor context, int mouseX, int mouseY, float deltaTicks) {
 		super.extractRenderState(context, mouseX, mouseY, deltaTicks);
 		BeaconRangeHud.drawTooltip(context, this.font, this.menu, this.leftPos, this.topPos, mouseX, mouseY);
 	}

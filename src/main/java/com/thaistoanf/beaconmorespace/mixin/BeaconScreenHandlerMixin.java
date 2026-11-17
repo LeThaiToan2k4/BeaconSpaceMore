@@ -65,7 +65,7 @@ public abstract class BeaconScreenHandlerMixin implements BeaconScreenHandlerAcc
 
 		PaymentTier tier = PaymentTier.fromStack(stack);
 		this.access.execute((world, pos) -> {
-			if (world.getBlockEntity(pos) instanceof BeaconRangeAccess beaconEntity) {
+			if (pos != null && world.getBlockEntity(pos) instanceof BeaconRangeAccess beaconEntity) {
 				beaconEntity.beaconmorespace$setPaymentTier(tier.index());
 			}
 		});

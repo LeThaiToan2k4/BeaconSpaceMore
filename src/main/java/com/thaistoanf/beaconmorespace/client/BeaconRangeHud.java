@@ -13,6 +13,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.inventory.BeaconMenu;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix3x2fStack;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Renders the Beacon More Space indicator inside the vanilla Beacon GUI.
@@ -53,7 +55,7 @@ public final class BeaconRangeHud {
 	}
 
 	/** Called at the end of {@code BeaconScreen#extractLabels} (matrix already at GUI origin). */
-	public static void drawForeground(GuiGraphicsExtractor context, Font textRenderer, BeaconMenu handler) {
+	public static void drawForeground(@NonNull GuiGraphicsExtractor context, @NonNull Font textRenderer, @NonNull BeaconMenu handler) {
 		int syncedTier = ((BeaconScreenHandlerAccess) handler).beaconmorespace$getSyncedTier();
 		if (syncedTier < 0) {
 			// Server without Beacon More Space: nothing reliable to show.
@@ -87,7 +89,7 @@ public final class BeaconRangeHud {
 
 	/** Called at the end of {@code BeaconScreen#extractRenderState} with absolute screen coordinates. */
 	public static void drawTooltip(
-			GuiGraphicsExtractor context, Font textRenderer, BeaconMenu handler,
+			@NonNull GuiGraphicsExtractor context, @NonNull Font textRenderer, @NonNull BeaconMenu handler,
 			int guiX, int guiY, int mouseX, int mouseY
 	) {
 		int syncedTier = ((BeaconScreenHandlerAccess) handler).beaconmorespace$getSyncedTier();
@@ -105,7 +107,7 @@ public final class BeaconRangeHud {
 		int level = handler.getLevels();
 		PaymentTier preview = getPreviewTier(handler);
 
-		List<Component> lines = new ArrayList<>();
+		List<@NonNull Component> lines = new ArrayList<>();
 		lines.add(Component.translatable("beaconmorespace.gui.title").withStyle(ChatFormatting.GOLD));
 		lines.add(tierLine(tier));
 		lines.add(Component.translatable("beaconmorespace.gui.level", level).withStyle(ChatFormatting.GRAY));
@@ -135,30 +137,30 @@ public final class BeaconRangeHud {
 		context.setComponentTooltipForNextFrame(textRenderer, lines, mouseX, mouseY);
 	}
 
-	private static PaymentTier getPreviewTier(BeaconMenu handler) {
+	private static @Nullable PaymentTier getPreviewTier(BeaconMenu handler) {
 		ItemStack stack = handler.getSlot(0).getItem();
 		return stack.isEmpty() ? null : PaymentTier.fromStack(stack);
 	}
 
-	private static MutableComponent tierLine(PaymentTier tier) {
+	private static @NonNull MutableComponent tierLine(PaymentTier tier) {
 		return Component.translatable(
 				"beaconmorespace.gui.tier",
 				Component.translatable(tier.translationKey()).withColor(tier.color())
 		);
 	}
 
-	private static MutableComponent rangeLine(int level, PaymentTier tier) {
+	private static @NonNull MutableComponent rangeLine(int level, PaymentTier tier) {
 		return Component.translatable("beaconmorespace.gui.range", BeaconRange.totalRange(level, tier), tier.bonusRange());
 	}
 
-	private static MutableComponent previewLine(int level, PaymentTier preview) {
+	private static @NonNull MutableComponent previewLine(int level, PaymentTier preview) {
 		if (level > 0) {
 			return Component.translatable("beaconmorespace.gui.preview", BeaconRange.totalRange(level, preview), preview.bonusRange());
 		}
 		return Component.translatable("beaconmorespace.gui.preview_inactive", preview.bonusRange());
 	}
 
-	private static void drawCenteredScaled(GuiGraphicsExtractor context, Font textRenderer, Component text, int y, int color) {
+	private static void drawCenteredScaled(@NonNull GuiGraphicsExtractor context, @NonNull Font textRenderer, @NonNull Component text, int y, int color) {
 		int width = textRenderer.width(text);
 		if (width <= 0) {
 			return;

@@ -3,6 +3,7 @@ package com.thaistoanf.beaconmorespace.range;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Payment item tiers and the bonus range each one grants to a Beacon.
@@ -53,7 +54,7 @@ public enum PaymentTier {
 		return this.item;
 	}
 
-	public String translationKey() {
+	public @NonNull String translationKey() {
 		return "beaconmorespace.tier." + this.name;
 	}
 
