@@ -1,9 +1,9 @@
 package com.thaistoanf.beaconmorespace.range;
 
 import com.thaistoanf.beaconmorespace.access.BeaconRangeAccess;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** Range formulas shared by the server logic and the client GUI. */
 public final class BeaconRange {
@@ -21,7 +21,7 @@ public final class BeaconRange {
 	}
 
 	/** Looks up the bonus range stored on the Beacon at {@code pos}, or 0 if there is none. */
-	public static int bonusRangeAt(World world, BlockPos pos) {
+	public static int bonusRangeAt(Level world, BlockPos pos) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof BeaconRangeAccess access) {
 			return access.beaconmorespace$getBonusRange();

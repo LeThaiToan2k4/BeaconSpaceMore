@@ -5,13 +5,13 @@ import com.thaistoanf.beaconmorespace.range.BeaconRange;
 import com.thaistoanf.beaconmorespace.range.PaymentTier;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.BeaconScreenHandler;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.inventory.BeaconMenu;
+import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix3x2fStack;
 
 /**
@@ -34,7 +34,7 @@ public final class BeaconRangeHud {
 	private static final float MAX_SCALE = 0.8F;
 	private static final int LINE_SPACING = 8;
 
-	// Positions of the payment item icons drawn by vanilla BeaconScreen#drawBackground.
+	// Positions of the payment item icons drawn by vanilla BeaconScreen#extractBackground.
 	private static final int ICON_Y = 109;
 	private static final int ICON_X_IRON = 108;
 	private static final int ICON_X_GOLD = 86;
@@ -52,8 +52,8 @@ public final class BeaconRangeHud {
 	private BeaconRangeHud() {
 	}
 
-	/** Called at the end of {@code BeaconScreen#drawForeground} (matrix already at GUI origin). */
-	public static void drawForeground(DrawContext context, TextRenderer textRenderer, BeaconScreenHandler handler) {
+	/** Called at the end of {@code BeaconScreen#extractLabels} (matrix already at GUI origin). */
+	public static void drawForeground(GuiGraphicsExtractor context, Font textRenderer, BeaconMenu handler) {
 		int syncedTier = ((BeaconScreenHandlerAccess) handler).beaconmorespace$getSyncedTier();
 		if (syncedTier < 0) {
 			// Server without Beacon More Space: nothing reliable to show.
@@ -61,7 +61,7 @@ public final class BeaconRangeHud {
 		}
 
 		PaymentTier tier = PaymentTier.byIndex(syncedTier);
-		int level = handler.getProperties();
+		int level = handler.getLevels();
 		PaymentTier preview = getPreviewTier(handler);
 
 		int y = AREA_TOP + 2;
@@ -71,7 +71,7 @@ public final class BeaconRangeHud {
 		if (level > 0) {
 			drawCenteredScaled(context, textRenderer, rangeLine(level, tier), y, COLOR_RANGE);
 		} else {
-			drawCenteredScaled(context, textRenderer, Text.translatable("beaconmorespace.gui.range_inactive"), y, COLOR_INACTIVE);
+			drawCenteredScaled(context, textRenderer, Component.translatable("beaconmorespace.gui.range_inactive"), y, COLOR_INACTIVE);
 		}
 		y += LINE_SPACING;
 
@@ -85,9 +85,9 @@ public final class BeaconRangeHud {
 		}
 	}
 
-	/** Called at the end of {@code BeaconScreen#render} with absolute screen coordinates. */
+	/** Called at the end of {@code BeaconScreen#extractRenderState} with absolute screen coordinates. */
 	public static void drawTooltip(
-			DrawContext context, TextRenderer textRenderer, BeaconScreenHandler handler,
+			GuiGraphicsExtractor context, Font textRenderer, BeaconMenu handler,
 			int guiX, int guiY, int mouseX, int mouseY
 	) {
 		int syncedTier = ((BeaconScreenHandlerAccess) handler).beaconmorespace$getSyncedTier();
@@ -102,78 +102,78 @@ public final class BeaconRangeHud {
 		}
 
 		PaymentTier tier = PaymentTier.byIndex(syncedTier);
-		int level = handler.getProperties();
+		int level = handler.getLevels();
 		PaymentTier preview = getPreviewTier(handler);
 
-		List<Text> lines = new ArrayList<>();
-		lines.add(Text.translatable("beaconmorespace.gui.title").formatted(Formatting.GOLD));
+		List<Component> lines = new ArrayList<>();
+		lines.add(Component.translatable("beaconmorespace.gui.title").withStyle(ChatFormatting.GOLD));
 		lines.add(tierLine(tier));
-		lines.add(Text.translatable("beaconmorespace.gui.level", level).formatted(Formatting.GRAY));
+		lines.add(Component.translatable("beaconmorespace.gui.level", level).withStyle(ChatFormatting.GRAY));
 		if (level > 0) {
 			lines.add(rangeLine(level, tier));
 		} else {
-			lines.add(Text.translatable("beaconmorespace.gui.range_inactive").formatted(Formatting.GRAY));
+			lines.add(Component.translatable("beaconmorespace.gui.range_inactive").withStyle(ChatFormatting.GRAY));
 		}
 		if (preview != null) {
-			lines.add(previewLine(level, preview).formatted(Formatting.GREEN));
+			lines.add(previewLine(level, preview).withStyle(ChatFormatting.GREEN));
 		}
 
 		if (level > 0) {
-			lines.add(Text.empty());
-			lines.add(Text.translatable("beaconmorespace.gui.table_header", level).formatted(Formatting.GRAY));
+			lines.add(Component.empty());
+			lines.add(Component.translatable("beaconmorespace.gui.table_header", level).withStyle(ChatFormatting.GRAY));
 			for (PaymentTier entry : PaymentTier.values()) {
-				MutableText line = Text.translatable(
+				MutableComponent line = Component.translatable(
 						"beaconmorespace.gui.table_entry",
-						Text.translatable(entry.translationKey()).styled(style -> style.withColor(entry.color())),
+						Component.translatable(entry.translationKey()).withColor(entry.color()),
 						BeaconRange.totalRange(level, entry),
 						entry.bonusRange()
 				);
-				lines.add(entry == tier ? line.formatted(Formatting.WHITE) : line.formatted(Formatting.DARK_GRAY));
+				lines.add(entry == tier ? line.withStyle(ChatFormatting.WHITE) : line.withStyle(ChatFormatting.DARK_GRAY));
 			}
 		}
 
-		context.drawTooltip(textRenderer, lines, mouseX, mouseY);
+		context.setComponentTooltipForNextFrame(textRenderer, lines, mouseX, mouseY);
 	}
 
-	private static PaymentTier getPreviewTier(BeaconScreenHandler handler) {
-		ItemStack stack = handler.getSlot(0).getStack();
+	private static PaymentTier getPreviewTier(BeaconMenu handler) {
+		ItemStack stack = handler.getSlot(0).getItem();
 		return stack.isEmpty() ? null : PaymentTier.fromStack(stack);
 	}
 
-	private static MutableText tierLine(PaymentTier tier) {
-		return Text.translatable(
+	private static MutableComponent tierLine(PaymentTier tier) {
+		return Component.translatable(
 				"beaconmorespace.gui.tier",
-				Text.translatable(tier.translationKey()).styled(style -> style.withColor(tier.color()))
+				Component.translatable(tier.translationKey()).withColor(tier.color())
 		);
 	}
 
-	private static MutableText rangeLine(int level, PaymentTier tier) {
-		return Text.translatable("beaconmorespace.gui.range", BeaconRange.totalRange(level, tier), tier.bonusRange());
+	private static MutableComponent rangeLine(int level, PaymentTier tier) {
+		return Component.translatable("beaconmorespace.gui.range", BeaconRange.totalRange(level, tier), tier.bonusRange());
 	}
 
-	private static MutableText previewLine(int level, PaymentTier preview) {
+	private static MutableComponent previewLine(int level, PaymentTier preview) {
 		if (level > 0) {
-			return Text.translatable("beaconmorespace.gui.preview", BeaconRange.totalRange(level, preview), preview.bonusRange());
+			return Component.translatable("beaconmorespace.gui.preview", BeaconRange.totalRange(level, preview), preview.bonusRange());
 		}
-		return Text.translatable("beaconmorespace.gui.preview_inactive", preview.bonusRange());
+		return Component.translatable("beaconmorespace.gui.preview_inactive", preview.bonusRange());
 	}
 
-	private static void drawCenteredScaled(DrawContext context, TextRenderer textRenderer, Text text, int y, int color) {
-		int width = textRenderer.getWidth(text);
+	private static void drawCenteredScaled(GuiGraphicsExtractor context, Font textRenderer, Component text, int y, int color) {
+		int width = textRenderer.width(text);
 		if (width <= 0) {
 			return;
 		}
 		float scale = Math.min(MAX_SCALE, MAX_LINE_WIDTH / (float) width);
 
-		Matrix3x2fStack matrices = context.getMatrices();
+		Matrix3x2fStack matrices = context.pose();
 		matrices.pushMatrix();
 		matrices.translate(AREA_CENTER_X, y);
 		matrices.scale(scale, scale);
-		context.drawTextWithShadow(textRenderer, text, -width / 2, 0, color);
+		context.text(textRenderer, text, -width / 2, 0, color);
 		matrices.popMatrix();
 	}
 
-	private static void drawIconOutline(DrawContext context, PaymentTier tier, int color) {
+	private static void drawIconOutline(GuiGraphicsExtractor context, PaymentTier tier, int color) {
 		int x = switch (tier) {
 			case IRON -> ICON_X_IRON;
 			case GOLD -> ICON_X_GOLD;
@@ -181,6 +181,6 @@ public final class BeaconRangeHud {
 			case DIAMOND -> ICON_X_DIAMOND;
 			case NETHERITE -> ICON_X_NETHERITE;
 		};
-		context.drawStrokedRectangle(x - 1, ICON_Y - 1, 18, 18, color);
+		context.outline(x - 1, ICON_Y - 1, 18, 18, color);
 	}
 }

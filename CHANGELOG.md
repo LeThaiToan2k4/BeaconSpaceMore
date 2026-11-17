@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 1.21.10
+## [1.0.0] - Fabric 26.1
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 1.21.10 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 26.1 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -23,23 +23,23 @@
   - Includes a hover tooltip displaying the current pyramid level and the full range table across all payment tiers.
 - **Multiplayer & Vanilla Compatibility:**
   - Server-side effect range calculation works with both modded and vanilla clients.
-  - Modded clients automatically synchronize the active tier via an extended `PropertyDelegate` and `CustomPayload` handshake.
+  - Modded clients automatically synchronize the active tier via an extended `ContainerData` and `CustomPacketPayload` handshake.
 
-### Technical Changes (1.21.10)
+### Technical Changes (26.1)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 1.21.10**, **Yarn `1.21.10+build.3`**, **Fabric Loader `0.20.1`**, and **Fabric API `0.138.4+1.21.10`**.
-  - Configured build toolchain for **Java 21**, **Gradle `8.14.3`**, and **Fabric Loom `1.11.8`**.
+  - Aligned target to **Minecraft 26.1** (unobfuscated Mojang mappings), **Fabric Loader `0.20.1`**, and **Fabric API `0.145.1+26.1`**.
+  - Configured build toolchain for **Java 25**, **Gradle `9.5.1`**, and **`net.fabricmc.fabric-loom` `1.14.10`**.
 - **BlockEntity Persistence:**
-  - Uses `readData(ReadView)` and `writeData(WriteView)` in `BeaconBlockEntityMixin`.
+  - Uses `loadAdditional(ValueInput)` and `saveAdditional(ValueOutput)` in `BeaconBlockEntityMixin`.
 - **GUI & 2D Matrix Rendering:**
-  - Uses JOML 2D `Matrix3x2fStack` (`pushMatrix`, `translate`, `scale`, `popMatrix`) via `DrawContext#getMatrices()` and `DrawContext#drawStrokedRectangle` in `BeaconRangeHud`.
+  - Uses `GuiGraphicsExtractor` (`pose()`, `text()`, `outline()`, `setComponentTooltipForNextFrame()`) and `BeaconScreen#extractLabels` / `extractRenderState` in `BeaconRangeHud` and `BeaconScreenMixin`.
 - **Networking:**
-  - Uses `CustomPayload` and `PacketCodec` registered via `PayloadTypeRegistry.playS2C()` in `HandshakePayload`.
-- **Screen Handler & Effects:**
-  - Captures payment items on `setEffects(Optional<RegistryEntry<StatusEffect>>, Optional<RegistryEntry<StatusEffect>>)`.
+  - Uses `CustomPacketPayload` and `StreamCodec` registered via `PayloadTypeRegistry.clientboundPlay()` in `HandshakePayload`.
+- **Menu & Effects:**
+  - Captures payment items on `BeaconMenu#updateEffects(Optional<Holder<MobEffect>>, Optional<Holder<MobEffect>>)`.
 
 ### Requirements
-- **Minecraft Java Edition:** `1.21.10`
-- **Java:** `21` or newer
+- **Minecraft Java Edition:** `26.1`
+- **Java:** `25` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.138.4+1.21.10` or newer
+- **Fabric API:** `0.145.1+26.1` or newer

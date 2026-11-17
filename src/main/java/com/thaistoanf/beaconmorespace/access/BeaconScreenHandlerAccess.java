@@ -1,7 +1,7 @@
 package com.thaistoanf.beaconmorespace.access;
 
 /**
- * Duck interface implemented on {@link net.minecraft.screen.BeaconScreenHandler}, used by the
+ * Duck interface implemented on {@link net.minecraft.world.inventory.BeaconMenu}, used by the
  * client GUI to read the synchronized payment tier of the open Beacon.
  */
 public interface BeaconScreenHandlerAccess {

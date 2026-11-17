@@ -1,10 +1,10 @@
 package com.thaistoanf.beaconmorespace.network;
 
 import com.thaistoanf.beaconmorespace.BeaconMoreSpace;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 /**
  * Empty marker payload. It is never actually sent; the client only registers a receiver for it so
@@ -12,14 +12,14 @@ import net.minecraft.util.Identifier;
  * Space installed. Only those clients receive the extra Beacon screen property, which keeps
  * vanilla clients from crashing on an unknown property index.
  */
-public record HandshakePayload() implements CustomPayload {
+public record HandshakePayload() implements CustomPacketPayload {
 	public static final HandshakePayload INSTANCE = new HandshakePayload();
-	public static final CustomPayload.Id<HandshakePayload> ID =
-			new CustomPayload.Id<>(Identifier.of(BeaconMoreSpace.MOD_ID, "handshake"));
-	public static final PacketCodec<RegistryByteBuf, HandshakePayload> CODEC = PacketCodec.unit(INSTANCE);
+	public static final CustomPacketPayload.Type<HandshakePayload> ID =
+			new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(BeaconMoreSpace.MOD_ID, "handshake"));
+	public static final StreamCodec<RegistryFriendlyByteBuf, HandshakePayload> CODEC = StreamCodec.unit(INSTANCE);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
+	public Type<? extends CustomPacketPayload> type() {
 		return ID;
 	}
 }

@@ -5,13 +5,13 @@ import com.thaistoanf.beaconmorespace.access.BeaconScreenHandlerAccess;
 import com.thaistoanf.beaconmorespace.range.PaymentTier;
 import com.thaistoanf.beaconmorespace.screen.ExtendedBeaconPropertyDelegate;
 import java.util.Optional;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.screen.BeaconScreenHandler;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.core.Holder;
+import net.minecraft.world.Container;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.inventory.BeaconMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,58 +25,58 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Captures the payment item when the player confirms new effects, and gives the client-side
  * screen handler room for the extra synchronized tier property.
  */
-@Mixin(BeaconScreenHandler.class)
+@Mixin(BeaconMenu.class)
 public abstract class BeaconScreenHandlerMixin implements BeaconScreenHandlerAccess {
 	@Shadow
 	@Final
-	private Inventory payment;
+	private Container beacon;
 
 	@Shadow
 	@Final
-	private ScreenHandlerContext context;
+	private ContainerLevelAccess access;
 
 	@Shadow
 	@Final
-	private PropertyDelegate propertyDelegate;
+	private ContainerData beaconData;
 
 	/**
-	 * Client constructor: {@code new ArrayPropertyDelegate(3)} becomes {@code new ArrayPropertyDelegate(4)}
+	 * Client constructor: {@code new SimpleContainerData(3)} becomes {@code new SimpleContainerData(4)}
 	 * so the tier property sent by a modded server has a slot to land in.
 	 */
-	@ModifyConstant(method = "<init>(ILnet/minecraft/inventory/Inventory;)V", constant = @Constant(intValue = 3))
+	@ModifyConstant(method = "<init>(ILnet/minecraft/world/Container;)V", constant = @Constant(intValue = 3))
 	private static int beaconmorespace$expandClientProperties(int original) {
 		return ExtendedBeaconPropertyDelegate.SIZE;
 	}
 
 	/**
-	 * Runs before {@code this.paymentSlot.takeStack(1)} consumes the item, so the payment stack is
+	 * Runs before {@code this.paymentSlot.remove(1)} consumes the item, so the payment stack is
 	 * still available to inspect.
 	 */
-	@Inject(method = "setEffects", at = @At("HEAD"))
+	@Inject(method = "updateEffects", at = @At("HEAD"))
 	private void beaconmorespace$capturePaymentTier(
-			Optional<RegistryEntry<StatusEffect>> primary,
-			Optional<RegistryEntry<StatusEffect>> secondary,
+			Optional<Holder<MobEffect>> primary,
+			Optional<Holder<MobEffect>> secondary,
 			CallbackInfo ci
 	) {
-		ItemStack stack = this.payment.getStack(0);
+		ItemStack stack = this.beacon.getItem(0);
 		if (stack.isEmpty()) {
 			return;
 		}
 
 		PaymentTier tier = PaymentTier.fromStack(stack);
-		this.context.run((world, pos) -> {
-			if (world.getBlockEntity(pos) instanceof BeaconRangeAccess beacon) {
-				beacon.beaconmorespace$setPaymentTier(tier.index());
+		this.access.execute((world, pos) -> {
+			if (world.getBlockEntity(pos) instanceof BeaconRangeAccess beaconEntity) {
+				beaconEntity.beaconmorespace$setPaymentTier(tier.index());
 			}
 		});
 	}
 
 	@Override
 	public int beaconmorespace$getSyncedTier() {
-		if (this.propertyDelegate.size() <= ExtendedBeaconPropertyDelegate.TIER_INDEX) {
+		if (this.beaconData.getCount() <= ExtendedBeaconPropertyDelegate.TIER_INDEX) {
 			return -1;
 		}
-		int raw = this.propertyDelegate.get(ExtendedBeaconPropertyDelegate.TIER_INDEX);
+		int raw = this.beaconData.get(ExtendedBeaconPropertyDelegate.TIER_INDEX);
 		return raw <= 0 ? -1 : PaymentTier.byIndex(raw - 1).index();
 	}
 }

@@ -1,7 +1,7 @@
 package com.thaistoanf.beaconmorespace.access;
 
 /**
- * Duck interface implemented on {@link net.minecraft.block.entity.BeaconBlockEntity} by
+ * Duck interface implemented on {@link net.minecraft.world.level.block.entity.BeaconBlockEntity} by
  * {@code BeaconBlockEntityMixin}. Each Beacon stores its own payment tier, so several Beacons on
  * the same pyramid each apply their own radius independently.
  *

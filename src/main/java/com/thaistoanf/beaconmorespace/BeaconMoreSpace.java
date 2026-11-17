@@ -19,7 +19,7 @@ public final class BeaconMoreSpace implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		PayloadTypeRegistry.playS2C().register(HandshakePayload.ID, HandshakePayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(HandshakePayload.ID, HandshakePayload.CODEC);
 		LOGGER.info("Beacon More Space initialized: beacon range now scales with the payment item.");
 	}
 }

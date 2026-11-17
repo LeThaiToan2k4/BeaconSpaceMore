@@ -7,15 +7,15 @@ import com.thaistoanf.beaconmorespace.range.BeaconRange;
 import com.thaistoanf.beaconmorespace.range.PaymentTier;
 import com.thaistoanf.beaconmorespace.screen.ExtendedBeaconPropertyDelegate;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.entity.BeaconBlockEntity;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Stores a per-Beacon payment tier, persists it, extends the effect radius in
- * {@code applyPlayerEffects}, and exposes the tier to modded clients through the screen handler.
+ * {@code applyEffects}, and exposes the tier to modded clients through the screen handler.
  */
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
@@ -46,7 +46,7 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 		int sanitized = PaymentTier.byIndex(tier).index();
 		if (sanitized != this.beaconmorespace$paymentTier) {
 			this.beaconmorespace$paymentTier = sanitized;
-			((BlockEntity) (Object) this).markDirty();
+			((BlockEntity) (Object) this).setChanged();
 		}
 	}
 
@@ -59,25 +59,25 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 	// Persistence
 	// ---------------------------------------------------------------------------------------------
 
-	@Inject(method = "readData", at = @At("TAIL"))
-	private void beaconmorespace$readPaymentTier(ReadView view, CallbackInfo ci) {
-		this.beaconmorespace$paymentTier = PaymentTier.byIndex(view.getInt(PAYMENT_TIER_KEY, PaymentTier.IRON.index())).index();
+	@Inject(method = "loadAdditional", at = @At("TAIL"))
+	private void beaconmorespace$readPaymentTier(ValueInput view, CallbackInfo ci) {
+		this.beaconmorespace$paymentTier = PaymentTier.byIndex(view.getIntOr(PAYMENT_TIER_KEY, PaymentTier.IRON.index())).index();
 	}
 
-	@Inject(method = "writeData", at = @At("TAIL"))
-	private void beaconmorespace$writePaymentTier(WriteView view, CallbackInfo ci) {
+	@Inject(method = "saveAdditional", at = @At("TAIL"))
+	private void beaconmorespace$writePaymentTier(ValueOutput view, CallbackInfo ci) {
 		view.putInt(PAYMENT_TIER_KEY, this.beaconmorespace$paymentTier);
 	}
 
 	// ---------------------------------------------------------------------------------------------
 	// Effect radius: double d = beaconLevel * 10 + 10;  ->  d + bonusRange
-	// The vanilla box logic (expand(d) on X/Y/Z, then stretch upwards by the world height) is kept.
+	// The vanilla box logic (inflate(d) on X/Y/Z, then expandTowards upwards by the world height) is kept.
 	// ---------------------------------------------------------------------------------------------
 
-	@ModifyVariable(method = "applyPlayerEffects", at = @At("STORE"), ordinal = 0)
+	@ModifyVariable(method = "applyEffects", at = @At("STORE"), ordinal = 0)
 	private static double beaconmorespace$addBonusRange(
 			double radius,
-			@Local(argsOnly = true) World world,
+			@Local(argsOnly = true) Level world,
 			@Local(argsOnly = true) BlockPos pos
 	) {
 		return radius + BeaconRange.bonusRangeAt(world, pos);
@@ -91,15 +91,15 @@ public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 			method = "createMenu",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/screen/BeaconScreenHandler;<init>(ILnet/minecraft/inventory/Inventory;Lnet/minecraft/screen/PropertyDelegate;Lnet/minecraft/screen/ScreenHandlerContext;)V"
+					target = "Lnet/minecraft/world/inventory/BeaconMenu;<init>(ILnet/minecraft/world/Container;Lnet/minecraft/world/inventory/ContainerData;Lnet/minecraft/world/inventory/ContainerLevelAccess;)V"
 			),
 			index = 2
 	)
-	private PropertyDelegate beaconmorespace$extendPropertyDelegate(
-			PropertyDelegate original,
-			@Local(argsOnly = true) PlayerEntity player
+	private ContainerData beaconmorespace$extendPropertyDelegate(
+			ContainerData original,
+			@Local(argsOnly = true) Player player
 	) {
-		if (player instanceof ServerPlayerEntity serverPlayer && ServerPlayNetworking.canSend(serverPlayer, HandshakePayload.ID)) {
+		if (player instanceof ServerPlayer serverPlayer && ServerPlayNetworking.canSend(serverPlayer, HandshakePayload.ID)) {
 			return new ExtendedBeaconPropertyDelegate(original, this);
 		}
 		return original;

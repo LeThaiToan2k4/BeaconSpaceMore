@@ -1,8 +1,8 @@
 package com.thaistoanf.beaconmorespace.range;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Payment item tiers and the bonus range each one grants to a Beacon.
@@ -68,7 +68,7 @@ public enum PaymentTier {
 	 */
 	public static PaymentTier fromStack(ItemStack stack) {
 		for (PaymentTier tier : BY_INDEX) {
-			if (stack.isOf(tier.item)) {
+			if (stack.is(tier.item)) {
 				return tier;
 			}
 		}
