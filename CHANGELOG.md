@@ -1,9 +1,9 @@
 # Changelog
 
-## [1.0.0] - Fabric 26.2
+## [1.0.0] - Fabric 26.3
 
 ### Overview
-- Upgraded **Beacon More Space** to **Minecraft 26.2 (Fabric)**.
+- Upgraded **Beacon More Space** to **Minecraft 26.3 (Fabric)**.
 - Beacon effect range scales with the payment item used when confirming effects in the Beacon GUI.
 
 ### Features
@@ -25,9 +25,9 @@
   - Server-side effect range calculation works with both modded and vanilla clients.
   - Modded clients automatically synchronize the active tier via an extended `ContainerData` and `CustomPacketPayload` handshake.
 
-### Technical Changes (26.2)
+### Technical Changes (26.3)
 - **Toolchain & Dependencies:**
-  - Aligned target to **Minecraft 26.2** (unobfuscated Mojang mappings), **Fabric Loader `0.20.1`**, and **Fabric API `0.161.0+26.2`**.
+  - Aligned target to **Minecraft 26.3** (unobfuscated Mojang mappings), **Fabric Loader `0.20.1`**, and **Fabric API `0.166.2+26.3`**.
   - Configured build toolchain for **Java 25**, **Gradle `9.5.1`**, and **`net.fabricmc.fabric-loom` `1.17.21`**.
 - **BlockEntity Persistence:**
   - Uses `loadAdditional(ValueInput)` and `saveAdditional(ValueOutput)` in `BeaconBlockEntityMixin`.
@@ -39,7 +39,7 @@
   - Captures payment items on `boolean BeaconMenu#updateEffects(Optional<Holder<MobEffect>>, Optional<Holder<MobEffect>>)` using `CallbackInfoReturnable<Boolean>` right before `PaymentSlot#remove(1)` (after `BeaconBlockEntity#validateEffects` passes).
 
 ### Requirements
-- **Minecraft Java Edition:** `26.2`
+- **Minecraft Java Edition:** `26.3`
 - **Java:** `25` or newer
 - **Fabric Loader:** `0.20.1` or newer
-- **Fabric API:** `0.161.0+26.2` or newer
+- **Fabric API:** `0.166.2+26.3` or newer
