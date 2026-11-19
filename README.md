@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img alt="Minecraft 26.1.2" src="https://img.shields.io/badge/Minecraft-26.1.2-62B47A?style=for-the-badge">
+  <img alt="Minecraft 26.2" src="https://img.shields.io/badge/Minecraft-26.2-62B47A?style=for-the-badge">
   <img alt="Fabric Loader 0.20.1+" src="https://img.shields.io/badge/Fabric_Loader-0.20.1%2B-DBD0B4?style=for-the-badge">
   <img alt="Java 25" src="https://img.shields.io/badge/Java-25-E76F00?style=for-the-badge">
   <a href="https://github.com/LeThaiToan2k4"><img alt="Author: thaistoanf" src="https://img.shields.io/badge/Author-thaistoanf-24292F?style=for-the-badge"></a>
@@ -103,19 +103,19 @@ tier data to send.
 
 ### Requirements
 
-| Component              | Version               |
-| ---------------------- | --------------------- |
-| Minecraft Java Edition | 26.1.2                |
-| Java                   | 25 or newer           |
-| Fabric Loader          | 0.20.1 or newer       |
-| Fabric API             | Matching 26.1.2 build |
+| Component              | Version             |
+| ---------------------- | ------------------- |
+| Minecraft Java Edition | 26.2                |
+| Java                   | 25 or newer         |
+| Fabric Loader          | 0.20.1 or newer     |
+| Fabric API             | Matching 26.2 build |
 
 ### Installation
 
 1. Install **Java 25**.
-2. Install **Fabric Loader** for Minecraft 26.1.2 from the official Fabric website.
-3. Download **Fabric API** for 26.1.2.
-4. Copy `beaconmorespace-fabric-26.1.2-1.0.0.jar` and the Fabric API jar into your `.minecraft/mods` folder.
+2. Install **Fabric Loader** for Minecraft 26.2 from the official Fabric website.
+3. Download **Fabric API** for 26.2.
+4. Copy `beaconmorespace-fabric-26.2-1.0.0.jar` and the Fabric API jar into your `.minecraft/mods` folder.
    - Windows: `%appdata%\.minecraft\mods`
    - macOS: `~/Library/Application Support/minecraft/mods`
    - Linux: `~/.minecraft/mods`
@@ -230,19 +230,19 @@ Nếu bạn vào máy chủ không cài mod, chỉ báo sẽ không hiển thị
 
 ### Yêu cầu
 
-| Thành phần             | Phiên bản                |
-| ---------------------- | ------------------------ |
-| Minecraft Java Edition | 26.1.2                   |
-| Java                   | 25 trở lên               |
-| Fabric Loader          | 0.20.1 trở lên           |
-| Fabric API             | Bản tương ứng với 26.1.2 |
+| Thành phần             | Phiên bản              |
+| ---------------------- | ---------------------- |
+| Minecraft Java Edition | 26.2                   |
+| Java                   | 25 trở lên             |
+| Fabric Loader          | 0.20.1 trở lên         |
+| Fabric API             | Bản tương ứng với 26.2 |
 
 ### Cài đặt
 
 1. Cài đặt **Java 25**.
-2. Cài đặt **Fabric Loader** cho Minecraft 26.1.2 từ trang chủ Fabric.
-3. Tải **Fabric API** cho 26.1.2.
-4. Chép `beaconmorespace-fabric-26.1.2-1.0.0.jar` và file jar Fabric API vào thư mục `.minecraft/mods`.
+2. Cài đặt **Fabric Loader** cho Minecraft 26.2 từ trang chủ Fabric.
+3. Tải **Fabric API** cho 26.2.
+4. Chép `beaconmorespace-fabric-26.2-1.0.0.jar` và file jar Fabric API vào thư mục `.minecraft/mods`.
    - Windows: `%appdata%\.minecraft\mods`
    - macOS: `~/Library/Application Support/minecraft/mods`
    - Linux: `~/.minecraft/mods`

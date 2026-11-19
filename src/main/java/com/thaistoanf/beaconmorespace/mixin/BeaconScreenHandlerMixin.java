@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Captures the payment item when the player confirms new effects, and gives the client-side
@@ -49,14 +49,21 @@ public abstract class BeaconScreenHandlerMixin implements BeaconScreenHandlerAcc
 	}
 
 	/**
-	 * Runs before {@code this.paymentSlot.remove(1)} consumes the item, so the payment stack is
-	 * still available to inspect.
+	 * Runs after {@code BeaconBlockEntity#validateEffects} passes and immediately before
+	 * {@code this.paymentSlot.remove(1)} consumes the item, so the payment stack is still
+	 * available to inspect.
 	 */
-	@Inject(method = "updateEffects", at = @At("HEAD"))
+	@Inject(
+			method = "updateEffects",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/inventory/BeaconMenu$PaymentSlot;remove(I)Lnet/minecraft/world/item/ItemStack;"
+			)
+	)
 	private void beaconmorespace$capturePaymentTier(
 			Optional<Holder<MobEffect>> primary,
 			Optional<Holder<MobEffect>> secondary,
-			CallbackInfo ci
+			CallbackInfoReturnable<Boolean> cir
 	) {
 		ItemStack stack = this.beacon.getItem(0);
 		if (stack.isEmpty()) {
