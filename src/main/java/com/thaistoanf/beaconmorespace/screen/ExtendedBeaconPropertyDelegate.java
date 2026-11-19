@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.ContainerData;
  * <p>The tier is encoded as {@code tier + 1} so that a value of {@code 0} on the client means
  * "not synchronized" (server without the mod).</p>
  */
+@SuppressWarnings("null")
 public final class ExtendedBeaconPropertyDelegate implements ContainerData {
 	public static final int VANILLA_SIZE = 3;
 	public static final int TIER_INDEX = 3;

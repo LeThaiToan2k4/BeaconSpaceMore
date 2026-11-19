@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
  * the handshake payload type that lets the server know whether a connected client has the mod
  * installed (and can therefore receive the extra Beacon screen property).</p>
  */
+@SuppressWarnings("null")
 public final class BeaconMoreSpace implements ModInitializer {
 	public static final String MOD_ID = "beaconmorespace";
 	public static final Logger LOGGER = LoggerFactory.getLogger("Beacon More Space");

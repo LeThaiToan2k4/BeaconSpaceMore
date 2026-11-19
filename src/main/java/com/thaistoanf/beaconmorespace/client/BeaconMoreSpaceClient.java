@@ -5,6 +5,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 /** Client entrypoint for Beacon More Space. */
+@SuppressWarnings("null")
 public final class BeaconMoreSpaceClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {

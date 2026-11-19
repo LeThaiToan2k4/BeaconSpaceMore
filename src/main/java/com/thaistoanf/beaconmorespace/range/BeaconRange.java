@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 /** Range formulas shared by the server logic and the client GUI. */
+@SuppressWarnings("null")
 public final class BeaconRange {
 	private BeaconRange() {
 	}

@@ -13,6 +13,7 @@ import org.jspecify.annotations.NullMarked;
  * Space installed. Only those clients receive the extra Beacon screen property, which keeps
  * vanilla clients from crashing on an unknown property index.
  */
+@SuppressWarnings("null")
 @NullMarked
 public record HandshakePayload() implements CustomPacketPayload {
 	public static final HandshakePayload INSTANCE = new HandshakePayload();

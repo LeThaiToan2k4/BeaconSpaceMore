@@ -11,6 +11,7 @@ import org.jspecify.annotations.NonNull;
  * <p>The {@link #index()} value is what gets persisted in the Beacon block entity data and
  * synchronized to the client.</p>
  */
+@SuppressWarnings("null")
 public enum PaymentTier {
 	IRON(0, 0, "iron", 0xD8D8D8, Items.IRON_INGOT),
 	GOLD(1, 10, "gold", 0xFFD83D, Items.GOLD_INGOT),

@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /** Draws the tier / range indicator and the hover tooltip on the vanilla Beacon screen. */
+@SuppressWarnings("null")
 @Mixin(BeaconScreen.class)
 public abstract class BeaconScreenMixin extends AbstractContainerScreen<BeaconMenu> {
 	private BeaconScreenMixin(BeaconMenu handler, Inventory inventory, Component title) {

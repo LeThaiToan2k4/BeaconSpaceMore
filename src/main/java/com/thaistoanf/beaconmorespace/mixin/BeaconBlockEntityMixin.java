@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Stores a per-Beacon payment tier, persists it, extends the effect radius in
  * {@code applyEffects}, and exposes the tier to modded clients through the screen handler.
  */
+@SuppressWarnings("null")
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin implements BeaconRangeAccess {
 	@Unique
