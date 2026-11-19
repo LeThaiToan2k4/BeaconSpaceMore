@@ -25,7 +25,6 @@ import org.jspecify.annotations.Nullable;
  * item icons along the bottom are outlined: green for the active tier, yellow for the previewed
  * tier in the payment slot.</p>
  */
-@SuppressWarnings("null")
 public final class BeaconRangeHud {
 	// Info area inside the secondary power panel (GUI-relative coordinates).
 	private static final int AREA_LEFT = 118;

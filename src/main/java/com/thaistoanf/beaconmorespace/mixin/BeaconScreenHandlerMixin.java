@@ -25,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Captures the payment item when the player confirms new effects, and gives the client-side
  * screen handler room for the extra synchronized tier property.
  */
-@SuppressWarnings("null")
 @Mixin(BeaconMenu.class)
 public abstract class BeaconScreenHandlerMixin implements BeaconScreenHandlerAccess {
 	@Shadow
